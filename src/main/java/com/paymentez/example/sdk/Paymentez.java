@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class Paymentez {
 
-    public static String PAYMENTEZ_DEV_URL = "https://ccapi-stg.paymentez.com";
+    public static String PAYMENTEZ_DEV_URL = "https://ccapi-dev.paymentez.com";
     public static String PAYMENTEZ_PROD_URL = "https://ccapi.paymentez.com";
     public static final String RESPONSE_HTTP_CODE = "RESPONSE_HTTP_CODE";
     public static final String RESPONSE_JSON = "RESPONSE_JSON";
