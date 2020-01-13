@@ -55,7 +55,7 @@ public class Main {
     @RequestMapping(value = "/get-cards", method = RequestMethod.GET, produces = "application/json")
     String getCards(@RequestParam(value = "uid") String uid, HttpServletResponse response) {
 
-        Map<String, String> mapResponse = Redeban.doGetRequest(Redeban.REDEBAN_PROD_URL + "/v2/card/list?uid="+uid);
+        Map<String, String> mapResponse = Redeban.doGetRequest(Redeban.REDEBAN_DEV_URL + "/v2/card/list?uid="+uid);
         response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
         return mapResponse.get(Redeban.RESPONSE_JSON);
     }
@@ -84,7 +84,7 @@ public class Main {
 
         String jsonRedebanDebit = Redeban.redebanDebitJson(customer, session_id, token, amount, dev_reference, description);
 
-        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_PROD_URL + "/v2/transaction/debit", jsonRedebanDebit);
+        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_DEV_URL + "/v2/transaction/debit", jsonRedebanDebit);
         response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
         return mapResponse.get(Redeban.RESPONSE_JSON);
     }
@@ -103,7 +103,7 @@ public class Main {
 
         String jsonRedebanDelete = Redeban.redebanDeleteJson(uid, token);
 
-        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_PROD_URL + "/v2/card/delete", jsonRedebanDelete);
+        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_DEV_URL + "/v2/card/delete", jsonRedebanDelete);
         response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
         return mapResponse.get(Redeban.RESPONSE_JSON);
     }
@@ -125,7 +125,7 @@ public class Main {
 
         String jsonRedebanVerify = Redeban.redebanVerifyJson(uid, transaction_id, type, value);
 
-        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_PROD_URL + "/v2/transaction/verify", jsonRedebanVerify);
+        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_DEV_URL + "/v2/transaction/verify", jsonRedebanVerify);
         response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
         return mapResponse.get(Redeban.RESPONSE_JSON);
     }
