@@ -16,7 +16,7 @@ import java.util.Map;
 public class Redeban {
 
     public static String REDEBAN_DEV_URL = "https://ccapi-dev.paymentez.com";
-    public static String REDEBAN_PROD_URL = "https://ccapi.paymentez.com";
+    public static String REDEBAN_PROD_URL = "https://ccapi-qa.paymentez.com";
     public static final String RESPONSE_HTTP_CODE = "RESPONSE_HTTP_CODE";
     public static final String RESPONSE_JSON = "RESPONSE_JSON";
 
