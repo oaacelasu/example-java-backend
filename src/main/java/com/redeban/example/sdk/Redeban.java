@@ -1,6 +1,6 @@
-package com.paymentez.example.sdk;
+package com.redeban.example.sdk;
 
-import com.paymentez.example.model.Customer;
+import com.redeban.example.model.Customer;
 import okhttp3.*;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,10 +13,10 @@ import java.util.Map;
 /**
  * Created by mmucito on 18/09/17.
  */
-public class Paymentez {
+public class Redeban {
 
-    public static String PAYMENTEZ_DEV_URL = "https://ccapi-dev.paymentez.com";
-    public static String PAYMENTEZ_PROD_URL = "https://ccapi.paymentez.com";
+    public static String REDEBAN_DEV_URL = "https://ccapi-dev.paymentez.com";
+    public static String REDEBAN_PROD_URL = "https://ccapi.paymentez.com";
     public static final String RESPONSE_HTTP_CODE = "RESPONSE_HTTP_CODE";
     public static final String RESPONSE_JSON = "RESPONSE_JSON";
 
@@ -41,7 +41,7 @@ public class Paymentez {
         return sha256hex;
     }
 
-    public static String paymentezDebitJson(Customer customer, String session_id, String token, double amount, String dev_reference, String description) {
+    public static String redebanDebitJson(Customer customer, String session_id, String token, double amount, String dev_reference, String description) {
         String session_id_row = "";
         if(session_id != null && session_id != ""){
             session_id_row = "\"session_id\": \"" + session_id + "\",";
@@ -67,7 +67,7 @@ public class Paymentez {
     }
 
 
-    public static String paymentezDeleteJson(String uid, String token) {
+    public static String redebanDeleteJson(String uid, String token) {
         return "{" +
                     "\"card\": {" +
                         "\"token\": \"" +token + "\"" +
@@ -78,7 +78,7 @@ public class Paymentez {
                 "}";
     }
 
-    public static String paymentezVerifyJson(String uid, String transaction_id, String type, String value) {
+    public static String redebanVerifyJson(String uid, String transaction_id, String type, String value) {
         return "{" +
                     "\"user\": {" +
                         "\"id\": \"" + uid + "\"" +
@@ -96,7 +96,7 @@ public class Paymentez {
         String jsonResponse = "{}";
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .header("Auth-Token", Paymentez.getAuthToken(System.getenv("PAYMENTEZ_APP_SERVER_CODE"), System.getenv("PAYMENTEZ_APP_SERVER_KEY")))
+                .header("Auth-Token", Redeban.getAuthToken(System.getenv("REDEBAN_APP_SERVER_CODE"), System.getenv("REDEBAN_APP_SERVER_KEY")))
                 .url(url)
                 .post(body)
                 .build();
@@ -118,7 +118,7 @@ public class Paymentez {
     public static Map<String, String> doGetRequest(String url){
         String jsonResponse = "{}";
         Request request = new Request.Builder()
-                .header("Auth-Token", Paymentez.getAuthToken(System.getenv("PAYMENTEZ_APP_SERVER_CODE"), System.getenv("PAYMENTEZ_APP_SERVER_KEY")))
+                .header("Auth-Token", Redeban.getAuthToken(System.getenv("REDEBAN_APP_SERVER_CODE"), System.getenv("REDEBAN_APP_SERVER_KEY")))
                 .url(url)
                 .build();
 

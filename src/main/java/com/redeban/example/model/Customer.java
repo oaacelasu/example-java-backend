@@ -1,4 +1,4 @@
-package com.paymentez.example.model;
+package com.redeban.example.model;
 
 /**
  * Created by mmucito on 19/09/17.

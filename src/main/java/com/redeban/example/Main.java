@@ -2,10 +2,10 @@
  * Created by mmucito on 18/09/17.
  */
 
-package com.paymentez.example;
+package com.redeban.example;
 
-import com.paymentez.example.model.Customer;
-import com.paymentez.example.sdk.Paymentez;
+import com.redeban.example.model.Customer;
+import com.redeban.example.sdk.Redeban;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpEntity;
@@ -28,7 +28,7 @@ public class Main {
 
     @RequestMapping("/")
     String index() {
-        return "Great, your backend is set up. Now you can configure the Paymentez example apps to point here.";
+        return "Great, your backend is set up. Now you can configure the Redeban example apps to point here.";
     }
 
     /**
@@ -39,14 +39,14 @@ public class Main {
      */
     Customer getAuthenticatedCustomer(String uid, HttpServletRequest request){
         Customer customer = new Customer(uid,
-                "dev@paymentez.com",
+                "dev@redeban.com",
                 request.getRemoteAddr());
         return customer;
     }
 
     /**
      * This endpoint receives an uid and gives you all their cards assigned to that user.
-     * Your own logic shouldn't Call Paymentez on every request, instead, you should cache the cards on your own servers.
+     * Your own logic shouldn't Call Redeban on every request, instead, you should cache the cards on your own servers.
      *
      * @param uid Customer identifier. This is the identifier you use inside your application; you will receive it in notifications.
      *
@@ -55,9 +55,9 @@ public class Main {
     @RequestMapping(value = "/get-cards", method = RequestMethod.GET, produces = "application/json")
     String getCards(@RequestParam(value = "uid") String uid, HttpServletResponse response) {
 
-        Map<String, String> mapResponse = Paymentez.doGetRequest(Paymentez.PAYMENTEZ_DEV_URL + "/v2/card/list?uid="+uid);
-        response.setStatus(Integer.parseInt(mapResponse.get(Paymentez.RESPONSE_HTTP_CODE)));
-        return mapResponse.get(Paymentez.RESPONSE_JSON);
+        Map<String, String> mapResponse = Redeban.doGetRequest(Redeban.REDEBAN_PROD_URL + "/v2/card/list?uid="+uid);
+        response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
+        return mapResponse.get(Redeban.RESPONSE_JSON);
     }
 
     /**
@@ -82,11 +82,11 @@ public class Main {
                         HttpServletRequest request, HttpServletResponse response) {
         Customer customer = getAuthenticatedCustomer(uid, request);
 
-        String jsonPaymentezDebit = Paymentez.paymentezDebitJson(customer, session_id, token, amount, dev_reference, description);
+        String jsonRedebanDebit = Redeban.redebanDebitJson(customer, session_id, token, amount, dev_reference, description);
 
-        Map<String, String> mapResponse = Paymentez.doPostRequest(Paymentez.PAYMENTEZ_DEV_URL + "/v2/transaction/debit", jsonPaymentezDebit);
-        response.setStatus(Integer.parseInt(mapResponse.get(Paymentez.RESPONSE_HTTP_CODE)));
-        return mapResponse.get(Paymentez.RESPONSE_JSON);
+        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_PROD_URL + "/v2/transaction/debit", jsonRedebanDebit);
+        response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
+        return mapResponse.get(Redeban.RESPONSE_JSON);
     }
 
     /**
@@ -101,11 +101,11 @@ public class Main {
     String deleteCard(@RequestParam(value = "uid") String uid,
                         @RequestParam(value = "token") String token, HttpServletResponse response) {
 
-        String jsonPaymentezDelete = Paymentez.paymentezDeleteJson(uid, token);
+        String jsonRedebanDelete = Redeban.redebanDeleteJson(uid, token);
 
-        Map<String, String> mapResponse = Paymentez.doPostRequest(Paymentez.PAYMENTEZ_DEV_URL + "/v2/card/delete", jsonPaymentezDelete);
-        response.setStatus(Integer.parseInt(mapResponse.get(Paymentez.RESPONSE_HTTP_CODE)));
-        return mapResponse.get(Paymentez.RESPONSE_JSON);
+        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_PROD_URL + "/v2/card/delete", jsonRedebanDelete);
+        response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
+        return mapResponse.get(Redeban.RESPONSE_JSON);
     }
 
     /**
@@ -123,17 +123,17 @@ public class Main {
                              @RequestParam(value = "transaction_id") String transaction_id, @RequestParam(value = "type") String type,
                       @RequestParam(value = "value") String value, HttpServletResponse response) {
 
-        String jsonPaymentezVerify = Paymentez.paymentezVerifyJson(uid, transaction_id, type, value);
+        String jsonRedebanVerify = Redeban.redebanVerifyJson(uid, transaction_id, type, value);
 
-        Map<String, String> mapResponse = Paymentez.doPostRequest(Paymentez.PAYMENTEZ_DEV_URL + "/v2/transaction/verify", jsonPaymentezVerify);
-        response.setStatus(Integer.parseInt(mapResponse.get(Paymentez.RESPONSE_HTTP_CODE)));
-        return mapResponse.get(Paymentez.RESPONSE_JSON);
+        Map<String, String> mapResponse = Redeban.doPostRequest(Redeban.REDEBAN_PROD_URL + "/v2/transaction/verify", jsonRedebanVerify);
+        response.setStatus(Integer.parseInt(mapResponse.get(Redeban.RESPONSE_HTTP_CODE)));
+        return mapResponse.get(Redeban.RESPONSE_JSON);
     }
 
     /**
      * This endpoint is used for:
      *
-     * Every time a transaction gets approved or cancelled you will get an HTTP POST request from Paymentez to your callback_url (configured using the admin cpanel).
+     * Every time a transaction gets approved or cancelled you will get an HTTP POST request from Redeban to your callback_url (configured using the admin cpanel).
      *
      * @param httpEntity A json with fields of the transaction, for more detail please look at: https://paymentez.github.io/api-doc
      *

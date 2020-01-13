@@ -1,19 +1,19 @@
 {
-  "name": "Example Paymentez Backend",
-  "description": "For testing the Paymentez example mobile apps at https://github.com/paymentez",
-  "repository": "https://github.com/paymentez/example-java-backend",
+  "name": "Example GlobalPay Redeban Backend",
+  "description": "For testing the GlobalPay Redeban example mobile apps at https://github.com/globalpayredeban",
+  "repository": "https://github.com/globalpayredeban/example-java-backend",
   "keywords": [
     "ios",
     "android",
     "java",
-    "paymentez"
+    "globalpayredeban"
   ],
   "env": {
-    "PAYMENTEZ_APP_SERVER_CODE": {
+    "REDEBAN_APP_SERVER_CODE": {
       "description": "Ask the Paymentez team for it.",
       "required": true
     },
-    "PAYMENTEZ_APP_SERVER_KEY": {
+    "REDEBAN_APP_SERVER_KEY": {
       "description": "Ask the Paymentez team for it.",
       "required": true
     }
